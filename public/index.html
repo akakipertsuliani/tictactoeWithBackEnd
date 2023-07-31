@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>TIC_TAC_TOE</title>
+</head>
+
+<body>
+    <div id="game-starter">
+        <div id="container">
+            <h1>Registration</h1>
+            <input class="input" type="text" placeholder="playerName" id="playername">
+            <input class="input" type="text" placeholder="realName" id="realname">
+            <input class="input" type="number" min="0" placeholder="room" id="room">
+            <input class="input" id="game-start" type="submit" value="Start Game">
+            <div id="playerAlert">
+                <h1 id="textAlert" style="color: red; font-size: 5em; max-width: 50%; text-align: center;"></h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="game">
+        <button id="go-back"><i class="fa-thin fa-chevron-left"></i> Back</button>
+        <div id="GAMEPOSITION">
+            <div>
+                <p class="player-symbol"><img class="player-score" src="image/playerX.png" alt="playerImg"></p>
+                <p class="player-score score-x" id="playerX"></p>
+            </div>
+            <div>
+                <p class="player-symbol"><img class="player-score" src="image/playerO.png" alt="playerImg"></p>
+                <p class="player-score score-o" id="playerO"></p>
+            </div>
+            <div>
+                <p class="player-symbol"><img class="player-score" src="image/Tie.png" alt="playerImg"></p>
+                <p class="player-score score-tie" id="tie"></p>
+            </div>
+        </div>
+
+
+        <div id="window">
+            <div id="GAME-BLOCKER">
+                <h1 id="ALERT-TEXT"></h1>
+            </div>
+            <div id="BUTTON-SECTION">
+                <button class="XO" data-num="0" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+                <button class="XO" data-num="1" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+                <button class="XO" data-num="2" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+                <button class="XO" data-num="3" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+                <button class="XO" data-num="4" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+                <button class="XO" data-num="5" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+                <button class="XO" data-num="6" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+                <button class="XO" data-num="7" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+                <button class="XO" data-num="8" data-symbol="null"><img class="player-icon" src=""
+                        alt="playerImg"></button>
+            </div>
+        </div>
+
+        <div id="GAME-CONTROL">
+            <button class="control-button" id="RESTART-BUTTON">Restart</button>
+            <button class="control-button" id="CONTINUE-BUTTON" disabled>Continue</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="gameScript.js"></script>
+</body>
+
+</html>
