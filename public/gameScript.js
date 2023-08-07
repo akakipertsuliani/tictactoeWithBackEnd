@@ -24,7 +24,7 @@ let startGame = document.getElementById("game-start");
 let blockPlayerRect = document.getElementById("playerAlert");
 let alertTextForStart = document.getElementById("textAlert");
 let rooms = ["3243", "1244", "4833"];
-let randomRoom = ["1212", "3245", "2345", "2342", "2390"];
+let randomRoom = ["1212", "1234", "1432"];
 var roomID;
 
 let gameStarter = document.getElementById("game-starter");
@@ -66,9 +66,8 @@ startGame.addEventListener("click", function () {
         }, 2000);
         return;
     } else if (!room) {
-        const randomIndex = Math.floor(Math.random() * randomRoom.length);
-        socket.emit("createRandomRoom", { id: randomRoom[randomIndex], playerName: inputPlayerName, name: inputRealname });
-        return;
+        randomIndex = Math.floor(Math.random() * randomRoom.length);
+        room = randomRoom[randomIndex];
     } else if (rooms.indexOf(room) === -1) {
         blockPlayerRect.style.display = "flex";
         alertTextForStart.innerHTML = "room - ის კოდი არასწორია";
@@ -79,7 +78,8 @@ startGame.addEventListener("click", function () {
     }
 
     socket.emit("createRoom", { id: room, playerName: inputPlayerName, name: inputRealname });
-
+    document.getElementById('player1Name').innerHTML = `You: ${inputPlayerName}`;
+    socket.emit("playerName", { name: inputPlayerName, id: room });
 });
 
 socket.on("gameStart", (id) => {
@@ -87,6 +87,15 @@ socket.on("gameStart", (id) => {
     gameView.style.display = "flex";
     roomID = id;
     socket.emit("joinRoom", roomID);
+});
+
+socket.on("names", (msg) => {
+    document.getElementById('player2Name').innerHTML = `${msg[1]} :Opponent`;
+    socket.emit("repeatName", { id: roomID, name: msg[0] });
+});
+
+socket.on("repeatName", (msg) => {
+    document.getElementById('player2Name').innerHTML = `${msg} :Opponent`;
 });
 
 const displayGameScore = () => {

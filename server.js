@@ -24,6 +24,7 @@ db.run(createTable, function (err) {
 })
 
 var currentRoom;
+let playerNameList = [];
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -65,36 +66,8 @@ io.on('connection', (socket) => {
             io.emit("roomIsBusy");
             return;
         } else if (userCount == 1) {
-            io.to(msg.id).emit("turnOffBlocker");    
+            io.to(msg.id).emit("turnOffBlocker");
         }
-
-        db.run(insertData, [msg.playerName, msg.name, msg.id], (err) => {
-            if (err) {
-                console.error("Error insert data:", err.message);
-            }
-        })
-
-        db.all("SELECT * FROM data", [], (err, rows) => {
-            if (err) {
-                console.error('Error selecting data:', err.message);
-            } else {
-                console.log('Selected data:');
-                rows.forEach((row) => {
-                    console.log(row);
-                });
-            }
-        });
-        currentRoom = msg.id;
-        io.to(socket.id).emit("gameStart", msg.id);
-    });
-
-    socket.on('createRandomRoom', (msg) => {
-        const room = io.sockets.adapter.rooms.get(msg.id);
-        const userCount = room ? room.size : 0;
-        if (userCount > 1) {
-            io.emit("roomIsBusy");
-            return;
-        } 
 
         db.run(insertData, [msg.playerName, msg.name, msg.id], (err) => {
             if (err) {
@@ -118,7 +91,7 @@ io.on('connection', (socket) => {
 
     socket.on("joinRoom", (id) => {
         socket.join(id);
-    })
+    });
 
     socket.on('restartGame', (id) => {
         io.to(id).emit("restartGame");
@@ -126,7 +99,7 @@ io.on('connection', (socket) => {
 
     socket.on('changeSymbol', (msg) => {
         io.to(msg.roomid).emit("showSymbol", { id: msg.id, symbol: msg.symbol });
-        socket.broadcast.emit("ALERT");
+        socket.to(msg.roomid).emit("ALERT");
     });
 
     socket.on('gamePosition', (msg) => {
@@ -144,6 +117,18 @@ io.on('connection', (socket) => {
     socket.on('leaveGame', () => {
         io.to(currentRoom).emit("restartGame");
         socket.leave(currentRoom);
+    })
+
+    socket.on("playerName", (msg) => {
+        playerNameList.push(msg.name)
+        if (playerNameList.length == 2) {
+            socket.to(msg.id).emit("names", playerNameList);
+        }
+    })
+
+    socket.on("repeatName", (msg) => {
+        socket.to(msg.id).emit("repeatName", msg.name);
+        playerNameList = [];
     })
 
 });
