@@ -15,6 +15,7 @@ let scoreTie = 0;
 var num = 0;
 let tieTest = 0;
 var playerRoomID;
+var userID;
 let checkGameWinState = false;
 
 let inputPlayerName;
@@ -42,7 +43,7 @@ socket.on("roomIsBusy", () => {
 })
 
 goBack.addEventListener('click', () => {
-    socket.emit("leaveGame");
+    socket.emit("leaveGame", roomID);
 });
 
 startGame.addEventListener("click", function () {
@@ -78,7 +79,7 @@ startGame.addEventListener("click", function () {
     }
 
     socket.emit("createRoom", { id: room, playerName: inputPlayerName, name: inputRealname });
-    document.getElementById('player1Name').innerHTML = `You: ${inputPlayerName}`;
+    document.getElementById('player1Name').innerHTML = `You: <br>${inputPlayerName}`;
     socket.emit("playerName", { name: inputPlayerName, id: room });
 });
 
@@ -90,12 +91,12 @@ socket.on("gameStart", (id) => {
 });
 
 socket.on("names", (msg) => {
-    document.getElementById('player2Name').innerHTML = `${msg[1]} :Opponent`;
-    socket.emit("repeatName", { id: roomID, name: msg[0] });
+    document.getElementById('player2Name').innerHTML = `Opponent: <br>${msg["pl2"]}`;
+    socket.emit("repeatName", { id: roomID, name: msg["pl1"] });
 });
 
-socket.on("repeatName", (msg) => {
-    document.getElementById('player2Name').innerHTML = `${msg} :Opponent`;
+socket.on("repeatNameSend", (msg) => {
+    document.getElementById('player2Name').innerHTML = `Opponent: <br>${msg}`;
 });
 
 const displayGameScore = () => {
@@ -163,8 +164,9 @@ const winnerReact = () => {
 
 socket.on("gameWin", function (msg) {
     gameBlocker.style = "display: inline-flex; justify-content: center; align-items: center;";
-    alertText.style = msg === 'X' ? "color: #01C9E4;" : "color: #1F1D88;";
-    alertText.innerHTML = `Winner is ${msg}`;
+    alertText.style = msg.symbol === 'X' ? "color: #01C9E4;" : "color: #1F1D88;";
+    alertText.innerHTML = `Winner is ${msg.symbol}`;
+    userID = msg.id;
     setTimeout(function () {
         alertText.innerHTML = "";
     }, 2000);
@@ -179,7 +181,7 @@ socket.on("restartGame", function () {
 });
 
 continueButton.addEventListener('click', function () {
-    socket.emit("continueGame", roomID);
+    socket.emit("continueGame", { room: roomID, userId: userID });
 });
 
 socket.on("nextMatch", function () {
@@ -237,7 +239,7 @@ socket.on("showSymbol", function (msg) {
 })
 
 socket.on("ALERT", () => {
-    gameBlocker.style = "display: none; justify-content: center; align-items: center;";
+    gameBlocker.style = "display: inline-flex; justify-content: center; align-items: center;";
 })
 
 socket.on("turnOffBlocker", () => {

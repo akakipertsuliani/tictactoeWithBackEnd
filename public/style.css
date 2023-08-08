@@ -13,11 +13,13 @@ body {
     display: flex;
     height: 100vh;
     width: 100%;
-    background: linear-gradient(112.72deg, #0FA642 0%, #1f007699 99.15%);
+    background: url(./image/background.png) no-repeat;
+    background-position: center;
+    background-size: cover;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-y: hidden;
 }
 
 /* gameStarter */
@@ -38,18 +40,17 @@ body {
     align-items: center;
     row-gap: 4vh;
     flex-direction: column;
-    overflow: hidden;
 }
 
 #go-back {
     font-size: 1.5em;
     font-family: monospace;
     font-weight: bold;
-    width: 15vw;
+    width: max(200px, 20vw);
     height: 8vh;
     border: none;
     border-radius: 20px;
-    background-color: orange;
+    background-color: #FFA500;
     transition: 0.2s ease-in-out;
 }
 
@@ -59,7 +60,8 @@ body {
     width: 40vw;
     height: 50%;
     border-radius: 10px;
-    background-color: #0C0C63;
+    border: 1px solid #FFF;
+    backdrop-filter: blur(20px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,16 +80,30 @@ body {
     height: 6vh;
     border: none;
     border-radius: 10px;
-    font-size: 2em;
+    font-size: 1.4em;
     font-family: monospace;
     font-weight: bold;
     text-indent: 7%;
+    border: 1px solid #FFF;
+    color: #FFF;    
+    background-color: transparent;
+}
+
+.input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.input::placeholder {
+    color: #FFF;
 }
 
 #game-start {
     text-indent: 0;
-    background-color: orange;
+    background-color: #FFA500;
+    color: #048804;
+    font-size: 2em;
     margin-bottom: 50px;
+    border: none;
     cursor: pointer;
     transition: 0.2s ease-in-out;
 }
@@ -95,34 +111,43 @@ body {
 
 #playerAlert {
     position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    background-color: #ffffff3a;
+    height: 100vh;
+    background-color: #FFFFFF3A;
     display: none;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    overflow: hidden;
 }
 
 /* Game style */
 
 #player-name {
     position: absolute;
-    top: 50%;
+    top: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 95%;
+    width: 60%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: -1;
 }
 
 #player1Name {
-    color: #015201;
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #FFF;
 }
 
 #player2Name {
-    color: #551705;
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #FFF;
 }
 
 img {
@@ -246,7 +271,7 @@ img {
 
 .control-button {
     border: none;
-    background-color: #3232b9;
+    background-color: #3232B9;
     box-shadow: 0 10px 2px #222296;
     color: #FFF;
     border-radius: 30px;
@@ -260,7 +285,7 @@ img {
 @media screen and (min-width: 768px) {
     #go-back:hover {
         color: #FFF;
-        background-color: #915e01;
+        background-color: #915E01;
     }
 
     #game-start:hover {
@@ -273,8 +298,8 @@ img {
     }
 
     .control-button:hover {
-        background-color: rgb(20, 18, 105);
-        box-shadow: 0 10px 2px rgb(50, 50, 185);
+        background-color: #141269;
+        box-shadow: 0 10px 2px #3232B9;
     }
 
 }
@@ -282,5 +307,13 @@ img {
 @media screen and (max-width: 768px) {
     #container {
         width: 80vw;
+    }
+    
+    #player-name {
+        width: 80%;
+    }
+
+    #textAlert {
+        font-size: 2em;
     }
 }

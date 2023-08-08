@@ -23,8 +23,8 @@ db.run(createTable, function (err) {
     }
 })
 
-var currentRoom;
-let playerNameList = [];
+let playerNameList = {};
+let winIdList = [];
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -85,7 +85,7 @@ io.on('connection', (socket) => {
                 });
             }
         });
-        currentRoom = msg.id;
+
         io.to(socket.id).emit("gameStart", msg.id);
     });
 
@@ -99,36 +99,42 @@ io.on('connection', (socket) => {
 
     socket.on('changeSymbol', (msg) => {
         io.to(msg.roomid).emit("showSymbol", { id: msg.id, symbol: msg.symbol });
-        socket.to(msg.roomid).emit("ALERT");
+        socket.to(msg.roomid).emit("turnOffBlocker");
     });
 
     socket.on('gamePosition', (msg) => {
-        io.to(msg.id).emit("gameWin", msg.symbol);
+        winIdList.push(socket.id)
+        if (winIdList.length == 2) {
+            io.to(msg.id).emit("gameWin", { symbol: msg.symbol, id: winIdList[0] })
+            winIdList = [];
+        }
     });
 
     socket.on('gameTie', (id) => {
         socket.to(id).emit("draw");
     });
 
-    socket.on('continueGame', (id) => {
-        io.to(id).emit("nextMatch");
+    socket.on('continueGame', (msg) => {
+        io.to(msg.room).emit("nextMatch");
+        io.to(msg.userId).emit("ALERT");
     });
 
-    socket.on('leaveGame', () => {
-        io.to(currentRoom).emit("restartGame");
-        socket.leave(currentRoom);
+    socket.on('leaveGame', (id) => {
+        io.to(id).emit("restartGame");
+        socket.leave(id);
     })
 
     socket.on("playerName", (msg) => {
-        playerNameList.push(msg.name)
-        if (playerNameList.length == 2) {
-            socket.to(msg.id).emit("names", playerNameList);
-        }
+        const room = io.sockets.adapter.rooms.get(msg.id);
+        const userCount = room ? room.size : 0;
+        userCount == 0 ? playerNameList["pl1"] = msg.name : false;
+        userCount == 1 ? playerNameList["pl2"] = msg.name : false;
+        socket.to(msg.id).emit("names", playerNameList);
     })
 
     socket.on("repeatName", (msg) => {
-        socket.to(msg.id).emit("repeatName", msg.name);
-        playerNameList = [];
+        socket.to(msg.id).emit("repeatNameSend", msg.name);
+        playerNameList = {};
     })
 
 });
