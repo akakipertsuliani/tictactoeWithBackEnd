@@ -316,4 +316,23 @@ img {
     #textAlert {
         font-size: 2em;
     }
+
+    #go-back:active {
+        color: #FFF;
+        background-color: #915E01;
+    }
+
+    #game-start:active {
+        background-color: #A86D00;
+        color: #FFF;
+    }
+
+    .XO:active {
+        background-color: #FFFFFF9C;
+    }
+
+    .control-button:active {
+        background-color: #141269;
+        box-shadow: 0 10px 2px #3232B9;
+    }
 }

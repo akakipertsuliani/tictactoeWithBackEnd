@@ -23,6 +23,7 @@ db.run(createTable, function (err) {
     }
 })
 
+let countClickObject = {};
 let playerNameList = {};
 let winIdList = [];
 const express = require('express');
@@ -94,7 +95,12 @@ io.on('connection', (socket) => {
     });
 
     socket.on('restartGame', (id) => {
-        io.to(id).emit("restartGame");
+        countClickObject[id] += '1';
+        if (countClickObject[id].split("undefined")[1] === "11") {
+            io.to(id).emit("restartGame");
+            io.to(id).emit("turnOffBlocker");
+            countClickObject[id] = "undefined";
+        }
     });
 
     socket.on('changeSymbol', (msg) => {
@@ -120,7 +126,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('leaveGame', (id) => {
-        io.to(id).emit("restartGame");
+        io.to(id).emit("roomClose");
+        countClickObject[id] = "undefined";
         socket.leave(id);
     })
 

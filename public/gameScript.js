@@ -173,11 +173,24 @@ socket.on("gameWin", function (msg) {
 });
 
 restartButton.addEventListener('click', function () {
+    restartButton.disabled = true;
+    restartButton.innerHTML = "Wait...";
+    restartButton.style = "box-shadow: 0 10px 2px #6e0d0d";
     socket.emit("restartGame", roomID);
 });
 
 socket.on("restartGame", function () {
-    location.reload();
+    restartButton.disabled = false;
+    for (let i = 0; i < 9; i++) {
+        playerIcon[i].style = "display: none;";
+        playerIcon[i].src = "";
+        gameBlocker.style = "display: none;"
+        buttons[i].dataset.symbol = "null";
+    }
+    restartButton.innerHTML = "Restart";
+    restartButton.style = "box-shadow: 0 10px 2px #222296";
+    [tieTest, scoreX, scoreO, scoreTie, countClick] = [0, 0, 0, 0, 0];
+    displayGameScore()
 });
 
 continueButton.addEventListener('click', function () {
@@ -257,4 +270,8 @@ socket.on("draw", function () {
     scoreTieFeedback.innerHTML = `${scoreTie} Draws`;
     continueButton.disabled = false;
     continueButton.style = "box-shadow: 0 10px 2px #222296";
+})
+
+socket.on("roomClose", () => {
+    location.reload();
 })
