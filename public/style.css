@@ -50,7 +50,7 @@ body {
     height: 8vh;
     border: none;
     border-radius: 20px;
-    background-color: #FFA500;
+    background-color: #B90F0F;
     transition: 0.2s ease-in-out;
 }
 
@@ -258,7 +258,7 @@ img {
 }
 
 .score-tie {
-    color: #444444;
+    color: #555;
 }
 
 #GAME-CONTROL {
@@ -285,7 +285,7 @@ img {
 @media screen and (min-width: 768px) {
     #go-back:hover {
         color: #FFF;
-        background-color: #915E01;
+        background-color: #EE3737;
     }
 
     #game-start:hover {
@@ -319,7 +319,7 @@ img {
 
     #go-back:active {
         color: #FFF;
-        background-color: #915E01;
+        background-color: #EE3737;
     }
 
     #game-start:active {
