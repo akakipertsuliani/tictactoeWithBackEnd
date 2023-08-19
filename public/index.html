@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" href="image/favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <title>TIC_TAC_TOE</title>
 </head>
@@ -21,7 +22,7 @@
     </div>
     
     <div id="playerAlert">
-        <h1 id="textAlert" style="color: red; text-align: center;"></h1>
+        <h1 id="textAlert"></h1>
     </div>
 
 
@@ -30,7 +31,7 @@
             <p id="player1Name"></p>
             <p id="player2Name"></p>
         </div>
-        <button id="go-back"><i class="fa-thin fa-chevron-left"></i> Leave Game</button>
+        <button type="button" id="go-back"><i class="fa-solid fa-person-walking-arrow-right" style="color: #ffffff; transform: rotateY(-180deg);"></i> Leave Game</button>
         <div id="GAMEPOSITION">
             <div>
                 <p class="player-symbol"><img class="player-score" src="image/playerX.png" alt="playerImg"></p>
@@ -52,30 +53,30 @@
                 <h1 id="ALERT-TEXT"></h1>
             </div>
             <div id="BUTTON-SECTION">
-                <button class="XO" data-num="0" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="0" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
-                <button class="XO" data-num="1" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="1" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
-                <button class="XO" data-num="2" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="2" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
-                <button class="XO" data-num="3" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="3" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
-                <button class="XO" data-num="4" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="4" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
-                <button class="XO" data-num="5" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="5" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
-                <button class="XO" data-num="6" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="6" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
-                <button class="XO" data-num="7" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="7" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
-                <button class="XO" data-num="8" data-symbol="null"><img class="player-icon" src=""
+                <button type="button" class="XO" data-num="8" data-symbol="null"><img class="player-icon" src=""
                         alt="playerImg"></button>
             </div>
         </div>
 
         <div id="GAME-CONTROL">
-            <button class="control-button" id="RESTART-BUTTON">Restart</button>
-            <button class="control-button" id="CONTINUE-BUTTON">Continue</button>
+            <button type="button" class="control-button" id="RESTART-BUTTON">Restart</button>
+            <button type="button" class="control-button" id="CONTINUE-BUTTON">Continue</button>
         </div>
     </div>
 
