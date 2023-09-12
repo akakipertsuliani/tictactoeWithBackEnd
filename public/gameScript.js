@@ -166,7 +166,7 @@ socket.on("gameWin", function (msg) {
     gameBlocker.style = "display: inline-flex; justify-content: center; align-items: center;";
     alertText.style = msg.symbol === 'X' ? "color: #01C9E4;" : "color: #1F1D88;";
     alertText.innerHTML = `Winner is ${msg.symbol}`;
-    userID = msg.id;
+    userID = msg.userId;
     setTimeout(function () {
         alertText.innerHTML = "";
     }, 2000);
@@ -222,12 +222,12 @@ buttons.forEach(function (button) {
                 }, 2000);
                 break;
             } else if (num == 0) {
-                socket.emit("changeSymbol", { id: button.getAttribute("data-num"), symbol: 'X', roomid: roomID });
+                socket.emit("changeSymbol", { id: button.getAttribute("data-num"), symbol: 'X', roomid: roomID, userId: socket.id });
                 gameBlocker.style = "display: inline-flex; justify-content: center; align-items: center;";
                 tieTest++;
                 break;
             } else if (num == 1) {
-                socket.emit("changeSymbol", { id: button.getAttribute("data-num"), symbol: 'O', roomid: roomID });
+                socket.emit("changeSymbol", { id: button.getAttribute("data-num"), symbol: 'O', roomid: roomID, userId: socket.id });
                 gameBlocker.style = "display: inline-flex; justify-content: center; align-items: center;";
                 tieTest++;
                 break;

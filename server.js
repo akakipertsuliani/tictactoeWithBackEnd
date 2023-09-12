@@ -25,7 +25,7 @@ db.run(createTable, function (err) {
 
 let countClickObject = {};
 let playerNameList = {};
-let winIdList = [];
+let endPosition = '';
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -106,14 +106,11 @@ io.on('connection', (socket) => {
     socket.on('changeSymbol', (msg) => {
         io.to(msg.roomid).emit("showSymbol", { id: msg.id, symbol: msg.symbol });
         socket.to(msg.roomid).emit("turnOffBlocker");
+        endPosition = msg.userId;
     });
 
     socket.on('gamePosition', (msg) => {
-        winIdList.push(socket.id)
-        if (winIdList.length == 2) {
-            io.to(msg.id).emit("gameWin", { symbol: msg.symbol, id: winIdList[0] })
-            winIdList = [];
-        }
+        io.to(msg.id).emit("gameWin", { symbol: msg.symbol, userId: endPosition });
     });
 
     socket.on('gameTie', (id) => {
@@ -122,7 +119,8 @@ io.on('connection', (socket) => {
 
     socket.on('continueGame', (msg) => {
         io.to(msg.room).emit("nextMatch");
-        io.to(msg.userId).emit("ALERT");
+        io.to(msg.room).emit("ALERT");
+        io.to(msg.userId).emit("turnOffBlocker");
     });
 
     socket.on('leaveGame', (id) => {
