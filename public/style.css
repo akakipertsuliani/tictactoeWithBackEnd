@@ -24,7 +24,7 @@ body {
 
 /* gameStarter */
 
-.game-starter {
+#game-starter {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -64,7 +64,7 @@ body {
 
 /* index page style */
 
-.container {
+#container {
     width: 40vw;
     height: 50%;
     border-radius: 10px;
@@ -79,7 +79,7 @@ body {
     row-gap: 2vh;
 }
 
-.container h1 {
+#container h1 {
     color: #FFF;
     font-size: 2em;
     font-family: monospace;
@@ -315,7 +315,7 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-    .container {
+    #container {
         width: 80vw;
     }
     
